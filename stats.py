@@ -40,7 +40,7 @@ class Plot:
         self.array_2 = array_2
         
     
-    def make_plot(self):
+    def make_plot(self, service_name: str):
         plt.plot(self.array_1, self.array_2, marker='o')
         plt.xlabel('Неделя')
         plt.ylabel('Кол-во ошибок, шт.')

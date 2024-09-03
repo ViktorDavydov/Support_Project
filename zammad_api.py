@@ -1,7 +1,6 @@
 
 import requests
 from datetime import datetime, timedelta
-from pprint import pprint
 import os
 from dotenv import load_dotenv, find_dotenv
 
@@ -76,6 +75,13 @@ class ZammadTickets:
                 }
                 tags_list.append(tags_info)
         return tags_list
+    
+    def sort_tags_by_week(self, tags_list: list[dict], service_name: str) -> list[dict]:
+        service_tags_list = [item for item in tags_list if item.get('service') == service_name]
+        sorted_service_tags_list = sorted(service_tags_list, key=lambda x: x['week'])
+        return sorted_service_tags_list
+        
+        
 
 
             
