@@ -14,6 +14,10 @@ class TagsManager:
             "esia": "ЕСИА Бот"
         }
     
+    def tags_sort_by_week(self, tags_list: list[dict]) -> list[dict]:
+        sorted_tags_list = sorted(tags_list, key=lambda x: x['week'])
+        return sorted_tags_list
+    
     def format_tags_view(self, sorted_tags_list: list[dict]) -> list[dict]:
         stats = {}
         for k, v in self.keys.items():
@@ -24,3 +28,7 @@ class TagsManager:
             }
             stats[k] = result
         return stats
+    
+    def make_arrays_for_plots(self):
+        pass
+    

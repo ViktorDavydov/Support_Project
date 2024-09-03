@@ -76,9 +76,7 @@ class ZammadTickets:
                 tags_list.append(tags_info)
         return tags_list
     
-    def tags_sort_by_week(self, tags_list: list[dict]) -> list[dict]:
-        sorted_tags_list = sorted(tags_list, key=lambda x: x['week'])
-        return sorted_tags_list
+
         
         
 

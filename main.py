@@ -14,9 +14,11 @@ frame = table.to_dataframe()
 print(frame)
 valid_tags = tickets.get_valid_tags(tickets_list)
 
-sorted_tags = tickets.tags_sort_by_week(tags_list=valid_tags)
+
 
 tags_manager = TagsManager()
+
+sorted_tags = tags_manager.tags_sort_by_week(tags_list=valid_tags)
 
 pprint(tags_manager.format_tags_view(sorted_tags_list=sorted_tags))
 
