@@ -35,16 +35,17 @@ class Tables:
         
 class Plot:
     
-    def __init__(self, array_1: list, array_2: list):
-        self.array_1 = array_1
-        self.array_2 = array_2
+    # def __init__(self, array_1: list, array_2: list):
+    #     self.array_1 = array_1
+    #     self.array_2 = array_2
+    
+    # def make_arrays_for_plot(self, sorted_tags_list: list[dict]) -> list:
         
     
-    def make_plot(self, service_name: str):
-        plt.plot(self.array_1, self.array_2, marker='o')
+    def make_plot(self, service_name: str, week: list[int], issues: list[int]):
+        plt.plot(week, issues, marker='o')
         plt.xlabel('Неделя')
         plt.ylabel('Кол-во ошибок, шт.')
-        plt.title('СКИП')
-        plt.grid()
+        plt.title(service_name)
         plt.show()
         
