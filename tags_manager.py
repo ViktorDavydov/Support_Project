@@ -28,8 +28,8 @@ class TagsManager:
             stats_dict[k] = result
         return stats_dict
     
-    def make_arrays_for_plots(self, formated_tags: dict) -> list[dict]:
-        arrays_for_plots = []  
+    def make_arrays_for_plots(self, formated_tags: dict) -> dict:
+        arrays_for_plots = {}
         for service, issues in formated_tags.items():
             service_name = self.service_names.get(service)
             code_issues_list = issues.get("code")
@@ -80,16 +80,15 @@ class TagsManager:
             
              
             result = {
-                service_name: {
                     "code_week_array": code_week_array,
                     "code_issues_array": code_issues_array,
                     "inner_week_array": inner_week_array,
                     "inner_issues_array": inner_issues_array,
                     "outer_week_array": outer_week_array,
                     "outer_issues_array": outer_issues_array
-                }
-            }
-            arrays_for_plots.append(result)
+                    }
+            
+            arrays_for_plots[service_name] = result
             
         return arrays_for_plots
             
