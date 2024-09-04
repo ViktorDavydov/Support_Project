@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "supportproject"
+version = "0.1.0"
+description = ""
+authors = ["Viktor Davydov <davydov.viktor.andreevich@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+zammad-py = "^3.0.0"
+pandas = "^2.2.2"
+xlsxwriter = "^3.2.0"
+matplotlib = "^3.9.2"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
