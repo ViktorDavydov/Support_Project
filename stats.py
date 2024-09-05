@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import numpy as np
 import os
 
@@ -39,46 +40,52 @@ class Plot:
     def make_plot(self, arrays_dict: dict):
         
         for service_name, arrays in arrays_dict.items():
-            plt.figure(figsize=(16,5))
-            plt.title(service_name)
+            plt.figure(figsize=(14,5))
+            
+            x = np.array(arrays["week_array"])
+
+            # Оставляем только целые значения для оси X
+            xticks = np.arange(np.floor(x.min()), np.ceil(x.max()) + 1, 1)  # Целые значения
+            
             
             # График ошибок Код (Backend/Frontend)
             plt.subplot(1, 3, 1)
-            x = np.array(arrays["code_week_array"])
             y = np.array(arrays["code_issues_array"])
+            yticks = np.arange(np.floor(y.min()), np.ceil(y.max()) + 1, 1)  # Целые значения
             plt.xlabel("Недели\nКод (Backend/Frontend)")
             plt.ylabel("Кол-во ошибок, шт.")
-            plt.xticks(arrays["code_week_array"])
-            plt.yticks(arrays["code_issues_array"])
-            plt.plot(x, y, marker = "o")
+            plt.plot(x, y, marker = "o", color="blue")
+            plt.xticks(xticks)  # Устанавливаем только целые значения для X
+            plt.yticks(yticks)  # Устанавливаем только целые значения для Y
+            plt.title(service_name)
             
             # График ошибок "Внутренняя (системная)"
             plt.subplot(1, 3, 2)
-            x = np.array(arrays["inner_week_array"])
             y = np.array(arrays["inner_issues_array"])
+            yticks = np.arange(np.floor(y.min()), np.ceil(y.max()) + 1, 1)  # Целые значения
             plt.xlabel("Недели\nВнутренняя (системная)")
-            plt.ylabel("Кол-во ошибок, шт.")
-            plt.xticks(arrays["inner_week_array"])
-            plt.yticks(arrays["inner_issues_array"])
-            plt.plot(x, y, marker = "o")
+            plt.plot(x, y, marker = "o", color="orange")
+            plt.xticks(xticks)  # Устанавливаем только целые значения для X
+            plt.yticks(yticks)  # Устанавливаем только целые значения для Y
+            plt.title(service_name)
             
             # График ошибок "Внешняя (сайт/источник/вендор)"
             plt.subplot(1, 3, 3)
-            x = np.array(arrays["outer_week_array"])
             y = np.array(arrays["outer_issues_array"])
+            yticks = np.arange(np.floor(y.min()), np.ceil(y.max()) + 1, 1)  # Целые значения
             plt.xlabel("Недели\nВнешняя (сайт/источник/вендор)")
-            plt.ylabel("Кол-во ошибок, шт.")
-            plt.xticks(arrays["outer_week_array"])
-            plt.yticks(arrays["outer_issues_array"])
-            plt.plot(x, y, marker = "o")
+            plt.plot(x, y, marker = "o", color="green")
+            plt.xticks(xticks)  # Устанавливаем только целые значения для X
+            plt.yticks(yticks)  # Устанавливаем только целые значения для Y
+            plt.title(service_name)
             
+            plt.tight_layout()
             plt.show()
-        
-        # dir_name = 'Plots'
-        # if not os.path.exists(dir_name):
-        #     os.mkdir(dir_name)
-        # else:
-        #     pass
-        # plt.savefig(f"{dir_name}/fig_1")
-        
+            
+            # dir_name = 'Plots'
+            # if not os.path.exists(dir_name):
+            #     os.mkdir(dir_name)
+            # else:
+            #     pass
+            # plt.savefig(f"{dir_name}/fig_1")
         
