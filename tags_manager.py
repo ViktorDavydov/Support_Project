@@ -29,63 +29,69 @@ class TagsManager:
         return stats_dict
     
     def make_arrays_for_plots(self, formated_tags: dict) -> dict:
+        '''
+        Создание arrays для графиков
+        '''
         arrays_for_plots = {}
-        for service, issues in formated_tags.items():
-            service_name = self.service_names.get(service)
+        longest_week_list = []
+        
+        
+        # Выявление наиболее длинного списка недель
+        
+        for issues in formated_tags.values():
+            
             code_issues_list = issues.get("code")
             inner_issues_list = issues.get("inner")
             outer_issues_list = issues.get("outer")
             
-            if code_issues_list:
+            if code_issues_list or inner_issues_list or outer_issues_list:
                 code_week_array = list(set([item.get("week") for item in code_issues_list]))
-                code_issues_array = []
-                for week in code_week_array:
-                    temp_issues_count_list = []
-                    for item in code_issues_list:
-                        if week == item.get("week"):
-                            temp_issues_count_list.append(item.get("issues_count"))
-                    total_week_issues = sum(temp_issues_count_list)
-                    code_issues_array.append(total_week_issues)
-            else:
-                code_week_array = []
-                code_issues_array = []
-                
-            if inner_issues_list:
                 inner_week_array = list(set([item.get("week") for item in inner_issues_list]))
-                inner_issues_array = []
-                for week in inner_week_array:
-                    temp_issues_count_list = []
-                    for item in inner_issues_list:
-                        if week == item.get("week"):
-                            temp_issues_count_list.append(item.get("issues_count"))
-                    total_week_issues = sum(temp_issues_count_list)
-                    inner_issues_array.append(total_week_issues)
-            else:
-                inner_week_array = []
-                inner_issues_array = []
-                
-            if outer_issues_list:
                 outer_week_array = list(set([item.get("week") for item in outer_issues_list]))
-                outer_issues_array = []
-                for week in outer_week_array:
-                    temp_issues_count_list = []
-                    for item in outer_issues_list:
-                        if week == item.get("week"):
-                            temp_issues_count_list.append(item.get("issues_count"))
-                    total_week_issues = sum(temp_issues_count_list)
-                    outer_issues_array.append(total_week_issues)
-            else:
-                outer_week_array = []
-                outer_issues_array = []
+                
+                temp_list = [code_week_array, inner_week_array, outer_week_array]
+                
+                if len(max(temp_list, key=len)) > len(longest_week_list):
+                    longest_week_list = max(temp_list, key=len)
+        
+        
+        # Сбор списков ошибок длиной равному наиболее длинному списку недель
+                
+        for service, issues in formated_tags.items():
             
-             
+            code_issues_list = issues.get("code")
+            inner_issues_list = issues.get("inner")
+            outer_issues_list = issues.get("outer")
+            service_name = self.service_names.get(service)
+            
+            code_issues_array = []
+            inner_issues_array = []
+            outer_issues_array = []
+            for week in longest_week_list:
+                total_code_week_issues = sum([item.get("issues_count") for item in code_issues_list if week == item.get("week")])
+                total_inner_week_issues = sum([item.get("issues_count") for item in inner_issues_list if week == item.get("week")])
+                total_outer_week_issues = sum([item.get("issues_count") for item in outer_issues_list if week == item.get("week")])
+                
+                if total_code_week_issues > 0:
+                    code_issues_array.append(total_code_week_issues)
+                else:
+                    code_issues_array.append(0)
+                    
+                if total_inner_week_issues > 0:
+                    inner_issues_array.append(total_inner_week_issues)
+                else:
+                    inner_issues_array.append(0)
+                
+                if total_outer_week_issues > 0:
+                    outer_issues_array.append(total_outer_week_issues)
+                else:
+                    outer_issues_array.append(0)
+
             result = {
-                    "code_week_array": code_week_array,
                     "code_issues_array": code_issues_array,
-                    "inner_week_array": inner_week_array,
                     "inner_issues_array": inner_issues_array,
-                    "outer_week_array": outer_week_array,
-                    "outer_issues_array": outer_issues_array
+                    "outer_issues_array": outer_issues_array,
+                    "week_array": longest_week_list
                     }
             
             arrays_for_plots[service_name] = result
