@@ -44,15 +44,14 @@ class TagsManager:
             inner_issues_list = issues.get("inner")
             outer_issues_list = issues.get("outer")
             
-            if code_issues_list or inner_issues_list or outer_issues_list:
-                code_week_array = list(set([item.get("week") for item in code_issues_list]))
-                inner_week_array = list(set([item.get("week") for item in inner_issues_list]))
-                outer_week_array = list(set([item.get("week") for item in outer_issues_list]))
-                
-                temp_list = [code_week_array, inner_week_array, outer_week_array]
-                
-                if len(max(temp_list, key=len)) > len(longest_week_list):
-                    longest_week_list = max(temp_list, key=len)
+            code_week_array = [item.get("week") for item in code_issues_list]
+            inner_week_array = [item.get("week") for item in inner_issues_list]
+            outer_week_array = [item.get("week") for item in outer_issues_list]
+
+            longest_week_list += code_week_array + inner_week_array + outer_week_array
+            
+        longest_week_list = sorted(list(set(longest_week_list)))
+        print(longest_week_list)
         
         
         # Сбор списков ошибок длиной равному наиболее длинному списку недель
