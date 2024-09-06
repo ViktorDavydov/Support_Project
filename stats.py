@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
 import os
+import datetime
 
 class Tables:
     
@@ -37,7 +38,7 @@ class Tables:
         
 class Plot:        
     
-    def make_plot(self, arrays_dict: dict):
+    def make_and_save_plots(self, arrays_dict: dict):
         
         for service_name, arrays in arrays_dict.items():
             plt.figure(figsize=(14,5))
@@ -55,7 +56,7 @@ class Plot:
                 empty_line_array = [1 for _ in range(len(arrays["code_issues_array"]))] # Для спуска нулевой линии вниз
             yticks = np.arange(np.floor(y.min()), np.ceil(y.max()) + 1, 1)  # Целые значения
             plt.xlabel("Недели\nКод (Backend/Frontend)")
-            plt.ylabel("Кол-во ошибок, шт.")
+            plt.ylabel("Кол-во заявок с ошибками, шт.")
             plt.plot(x, y, marker = "o", color="blue")
             plt.plot(x, empty_line_array, linewidth=0)
             
@@ -96,12 +97,14 @@ class Plot:
             plt.title(service_name)
             
             plt.tight_layout()
-            plt.show()
             
-            # dir_name = 'Plots'
-            # if not os.path.exists(dir_name):
-            #     os.mkdir(dir_name)
-            # else:
-            #     pass
-            # plt.savefig(f"{dir_name}/fig_1")
+            base_dir_name = 'Plots'
+            if not os.path.exists(base_dir_name):
+                os.mkdir(base_dir_name)
+            
+            dir_name = f"Графики_{str(datetime.datetime.now().strftime('%Y-%m-%d_%H-%M'))}"
+            if not os.path.exists(f"{base_dir_name}/{dir_name}"):
+                os.mkdir(f"{base_dir_name}/{dir_name}")
+            
+            plt.savefig(f"{base_dir_name}/{dir_name}/{service_name}")
         
