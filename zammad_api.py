@@ -39,6 +39,14 @@ class ZammadTickets:
             result_list.extend(response_ticket_list.json())
         return result_list
     
+    def get_first_response_avg_min(self, tickets_list_by_period: list[dict]) -> int:
+        '''
+        Вычисление и получение среднего времени первого ответа в минутах по списку тикетов
+        '''
+        response_minutes_list = [ticket.get('first_response_in_min') for ticket in tickets_list_by_period if ticket.get('first_response_in_min') is not None]
+        avg_response_min = round(sum(response_minutes_list) / len(response_minutes_list), 2)
+        return avg_response_min
+            
     
     def get_tickets_by_period(self, start_date: str, end_date: str) -> list[dict]:
         '''
