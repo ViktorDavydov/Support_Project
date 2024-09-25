@@ -41,7 +41,8 @@ class Plot:
     def make_and_save_plots(self, arrays_dict: dict):
         
         for service_name, arrays in arrays_dict.items():
-            plt.figure(figsize=(20,4))
+            plt.figure(figsize=(18,4))
+            plt.rc('font', size=14)
             
             x = np.array(arrays["week_array"])
 
@@ -55,10 +56,11 @@ class Plot:
             if sum(arrays["code_issues_array"]) == 0:
                 empty_line_array = [1 for _ in range(len(arrays["code_issues_array"]))] # Для спуска нулевой линии вниз
             yticks = np.arange(np.floor(y.min()), np.ceil(y.max()) + 1, 1)  # Целые значения
-            plt.xlabel("Недели\nКод (Backend/Frontend)")
+            plt.xlabel("Недели")
             plt.ylabel("Кол-во возникновений ошибок, шт.")
-            plt.plot(x, y, marker = "o", color="blue")
+            plt.plot(x, y, marker = "o", color="blue", label='Код\n(Backend/Frontend)')
             plt.plot(x, empty_line_array, linewidth=0)
+            plt.legend(loc='upper right', fontsize=10)
             
             plt.xticks(xticks)  # Устанавливаем только целые значения для X
             plt.yticks(yticks)  # Устанавливаем только целые значения для Y
@@ -72,9 +74,10 @@ class Plot:
             if sum(arrays["inner_issues_array"]) == 0:
                 empty_line_array = [1 for _ in range(len(arrays["inner_issues_array"]))] # Для спуска нулевой линии вниз
                 
-            plt.xlabel("Недели\nВнутренняя (системная)")
-            plt.plot(x, y, marker = "o", color="orange")
+            plt.xlabel("Недели")
+            plt.plot(x, y, marker = "o", color="orange", label='Внутренняя\n(системная)')
             plt.plot(x, empty_line_array, linewidth=0)
+            plt.legend(loc='upper right', fontsize=10)
             
             plt.xticks(xticks)  # Устанавливаем только целые значения для X
             plt.yticks(yticks)  # Устанавливаем только целые значения для Y
@@ -88,9 +91,10 @@ class Plot:
             if sum(arrays["outer_issues_array"]) == 0:
                 empty_line_array = [1 for _ in range(len(arrays["outer_issues_array"]))] # Для спуска нулевой линии вниз
                 
-            plt.xlabel("Недели\nВнешняя (сайт/источник/вендор)")
-            plt.plot(x, y, marker = "o", color="green")
+            plt.xlabel("Недели")
+            plt.plot(x, y, marker = "o", color="green", label='Внешняя\n(сайт/источник/вендор)')
             plt.plot(x, empty_line_array, linewidth=0)
+            plt.legend(loc='upper right', fontsize=10)
             
             plt.xticks(xticks)  # Устанавливаем только целые значения для X
             plt.yticks(yticks)  # Устанавливаем только целые значения для Y
